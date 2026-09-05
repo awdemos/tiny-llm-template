@@ -1,8 +1,6 @@
-import math
-
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
+from torch import nn
 
 from training.config import Config
 
@@ -31,7 +29,7 @@ class CausalSelfAttention(nn.Module):
         self.register_buffer("causal_mask", mask)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        B, T, C = x.size()
+        _B, T, _C = x.size()
 
         mask = self.causal_mask[:T, :T]
 
@@ -114,7 +112,7 @@ class GPT(nn.Module):
         idx: torch.Tensor,
         targets: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor | None]:
-        B, T = idx.size()
+        _B, T = idx.size()
         assert T <= self.config.block_size, (
             f"Cannot forward sequence of length {T}; block_size is {self.config.block_size}"
         )
