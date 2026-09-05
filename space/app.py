@@ -4,12 +4,11 @@ import json
 
 import gradio as gr
 import torch
+from config import Config
 from huggingface_hub import hf_hub_download
+from model import GPT
 from safetensors.torch import load_model
 from tokenizers import Tokenizer
-
-from config import Config
-from model import GPT
 
 REPO = "your-username/tiny-llm-template"  # Replace with your HF model repo
 PROMPT_TEMPLATE = "### Instruction:\n{instruction}\n\n### Response:\n"
@@ -18,7 +17,9 @@ MAX_NEW_TOKENS = 200
 TEMPERATURE = 0.7
 TOP_K = 20
 
-cfg_dict = json.load(open(hf_hub_download(REPO, "config.json")))
+cfg_path = hf_hub_download(REPO, "config.json")
+with open(cfg_path) as f:
+    cfg_dict = json.load(f)
 cfg = Config(**{k: v for k, v in cfg_dict.items() if k in Config.__dataclass_fields__})
 model = GPT(cfg).eval()
 load_model(model, hf_hub_download(REPO, "model.safetensors"))

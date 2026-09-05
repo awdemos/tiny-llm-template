@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 
 @dataclass
@@ -14,8 +13,8 @@ class Config:
     # Tokenizer (only needed for sampling, not training)
     tokenizer_path: str = "tokenizer.json"
     # Dataset sources (override in your training script or via CLI)
-    pretrain_dataset: Optional[str] = None  # e.g. "roneneldan/TinyStories"
-    sft_dataset: Optional[str] = None       # e.g. "databricks/dolly-15k"
+    pretrain_dataset: str | None = None  # e.g. "roneneldan/TinyStories"
+    sft_dataset: str | None = None  # e.g. "databricks/dolly-15k"
 
     # ----- Model architecture (the "Tiny" tier from our curriculum) -----
     vocab_size: int = 8192  # must match your trained tokenizer
@@ -53,13 +52,13 @@ class Config:
     seed: int = 1337
 
     # ----- Checkpoint sync (Hugging Face Hub) -----
-    hf_repo_id: Optional[str] = None
+    hf_repo_id: str | None = None
     hf_private: bool = True
     resume: bool = True  # try to pull latest ckpt on start
 
     # ----- Logging (Weights & Biases) -----
-    wandb_project: Optional[str] = None
-    wandb_entity: Optional[str] = None  # your W&B username/team, optional
+    wandb_project: str | None = None
+    wandb_entity: str | None = None  # your W&B username/team, optional
 
     # ----- Convenience factories — call these instead of constructing by hand -----
     @classmethod

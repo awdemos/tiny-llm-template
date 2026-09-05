@@ -7,20 +7,30 @@ from dataclasses import asdict
 from pathlib import Path
 
 import torch
-from safetensors.torch import save_model
 from huggingface_hub import HfApi
+from safetensors.torch import save_model
 
 from training.config import Config
 from training.model import GPT
 
-REPO_ID = "your-username/tiny-llm-template"  # Replace with your HF username and repo name
+REPO_ID = (
+    "your-username/tiny-llm-template"  # Replace with your HF username and repo name
+)
 CKPT_PATH = Path("out/ckpt.pt")
 TOKENIZER_PATH = Path("tokenizer.json")
 README_PATH = Path("README.md")
 BANNER_PATH = Path("banner.png")  # Add a banner image to your release
 STAGE_DIR = Path("hf_release")
 
-ARCH_FIELDS = ("vocab_size", "block_size", "n_layer", "n_head", "n_embd", "dropout", "bias")
+ARCH_FIELDS = (
+    "vocab_size",
+    "block_size",
+    "n_layer",
+    "n_head",
+    "n_embd",
+    "dropout",
+    "bias",
+)
 
 
 def main() -> None:
