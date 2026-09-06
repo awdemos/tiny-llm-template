@@ -186,7 +186,8 @@ def save_checkpoint(
             )
             print(f"  → pushed to {config.hf_repo_id}")
         except Exception as e:
-            print(f"  ! Hub upload failed ({type(e).__name__}: {e}) — continuing")
+            print(f"  ! Hub upload failed ({type(e).__name__}: {e}) — re-raising")
+            raise
 
 
 def train(config: Config):
